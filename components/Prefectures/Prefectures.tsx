@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-
+const API_KEY = import.meta.env.RESAS_API_KEY;
+console.log("API_KEY: ",API_KEY);
+/*
 const fetchCities = async (prefCode: number) => {
-  const API_KEY = process.env.REACT_APP_RESAS_API_KEY;
   try {
     const response = await fetch(
       `https://opendata.resas-portal.go.jp/api/v1/cities?prefCode=${prefCode}`,
@@ -77,4 +78,10 @@ export const Prefectures: React.FC<{ prefCode: number }> = ({ prefCode }) => {
       </ul>
     </div>
   );
+};
+*/
+export const Prefectures: React.FC = () => {
+    return (
+        <div>hoge</div>
+    )
 };
