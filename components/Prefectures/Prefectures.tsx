@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-const API_KEY = import.meta.env.RESAS_API_KEY;
-console.log("API_KEY: ",API_KEY);
+// import React, { useEffect, useState } from "react";
+import React from "react";
+// const API_KEY = process.env.RESAS_API_KEY;
+// console.log("API_KEY:", API_KEY);
 /*
 const fetchCities = async (prefCode: number) => {
   try {
@@ -81,7 +82,5 @@ export const Prefectures: React.FC<{ prefCode: number }> = ({ prefCode }) => {
 };
 */
 export const Prefectures: React.FC = () => {
-    return (
-        <div>hoge</div>
-    )
+  return <div>hoge</div>;
 };
