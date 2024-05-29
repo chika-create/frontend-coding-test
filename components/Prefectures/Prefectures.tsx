@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { fetchprefs } from "../../lib/fetchResasToken";
+import { PrefecturesItem } from "./PrefecturesItem";
 
 export const Prefectures: FC<{
   prefCode: number;
@@ -32,17 +33,8 @@ export const Prefectures: FC<{
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       <ul>
-        {prefs.map((pref) => (
-          <li key={pref.prefCode}>
-            <label>
-              {/* <input
-                type="checkbox"
-                checked={isChecked(pref.prefCode)}
-                onChange={() => handleCheckboxChange(pref.prefCode)}
-              /> */}
-              {pref.prefName}
-            </label>
-          </li>
+        {prefs.map((pref, index) => (
+          <PrefecturesItem pref={pref} prefCode={prefCode} key={index} />
         ))}
       </ul>
     </div>
