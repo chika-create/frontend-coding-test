@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { fetchprefs } from "../lib/fetchReasasToken";
+import { PopulationGraph } from "./PopulationGraph";
 
 export const PopulationhPrefecturesGrap: FC<{
   prefCode: number;
@@ -8,7 +9,6 @@ export const PopulationhPrefecturesGrap: FC<{
   const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
     []
   );
-  // const [selectedprefs, setSelectedprefs] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const API_KEY = apikey;
@@ -56,13 +56,7 @@ export const PopulationhPrefecturesGrap: FC<{
           </li>
         ))}
       </ul>
-      {/* <h2>選択された都道府県:</h2>
-      <ul>
-        {selectedprefs.map((prefCode) => {
-          const pref = prefs.find((c) => c.prefCode === prefCode);
-          return <li key={prefCode}>{pref?.prefName}</li>;
-        })}
-      </ul> */}
+      <PopulationGraph prefCode={prefCode} />
     </div>
   );
 };
