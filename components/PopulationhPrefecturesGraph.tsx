@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { fetchprefs } from "../lib/fetchReasasToken";
 import { PopulationGraph } from "./PopulationGraph";
 
-export const PopulationhPrefecturesGrap: FC<{
+export const PopulationPrefecturesGraph: FC<{
   prefCode: number;
   apikey: string;
 }> = ({ prefCode, apikey }) => {
