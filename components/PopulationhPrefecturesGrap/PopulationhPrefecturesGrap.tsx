@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { fetchprefs } from "../../lib/fetchReasasToken";
 
-export const Prefectures: FC<{ prefCode: number; apikey: string }> = ({
-  prefCode,
-  apikey,
-}) => {
+export const PopulationhPrefecturesGrap: FC<{
+  prefCode: number;
+  apikey: string;
+}> = ({ prefCode, apikey }) => {
   const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
     []
   );
