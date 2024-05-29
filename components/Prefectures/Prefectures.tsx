@@ -1,14 +1,11 @@
-// import React, { useEffect, useState } from "react";
-import React from "react";
-// const API_KEY = process.env.RESAS_API_KEY;
-// console.log("API_KEY:", API_KEY);
-/*
-const fetchCities = async (prefCode: number) => {
+import { FC, useEffect, useState } from "react";
+
+const fetchprefs = async (prefCode: number, API_KEY: string) => {
   try {
     const response = await fetch(
-      `https://opendata.resas-portal.go.jp/api/v1/cities?prefCode=${prefCode}`,
+      `https://opendata.resas-portal.go.jp/api/v1/prefectures`,
       {
-        headers: { 'X-API-KEY': API_KEY || '' }
+        headers: { "X-API-KEY": API_KEY || "" },
       }
     );
     if (!response.ok) {
@@ -17,70 +14,73 @@ const fetchCities = async (prefCode: number) => {
     const data = await response.json();
     return data.result;
   } catch (error) {
-    console.error('Error fetching cities:', error);
+    console.error("Error fetching prefs:", error);
     return [];
   }
 };
 
-export const Prefectures: React.FC<{ prefCode: number }> = ({ prefCode }) => {
-  const [cities, setCities] = useState<{ cityCode: string; cityName: string }[]>([]);
-  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+export const Prefectures: FC<{ prefCode: number; apikey: string }> = ({
+  prefCode,
+  apikey,
+}) => {
+  const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
+    []
+  );
+  // const [selectedprefs, setSelectedprefs] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const API_KEY = apikey;
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       setError(null);
-      const citiesData = await fetchCities(prefCode);
-      if (citiesData.length === 0) {
-        setError('Failed to fetch city data');
+      const prefsData = await fetchprefs(prefCode, API_KEY);
+      if (!prefsData || prefsData.length === 0) {
+        setError("Failed to fetch pref data");
+      } else {
+        setprefs(prefsData);
       }
-      setCities(citiesData);
       setLoading(false);
     })();
   }, [prefCode]);
 
-  const handleCheckboxChange = (cityCode: string) => {
-    setSelectedCities(prevState =>
-      prevState.includes(cityCode)
-        ? prevState.filter(c => c !== cityCode)
-        : [...prevState, cityCode]
-    );
-  };
+  // const handleCheckboxChange = (prefCode: string) => {
+  //   setSelectedprefs((prevState) =>
+  //     prevState.includes(prefCode)
+  //       ? prevState.filter((c) => c !== prefCode)
+  //       : [...prevState, prefCode]
+  //   );
+  // };
 
-  const isChecked = (cityCode: string) => selectedCities.includes(cityCode);
+  // const isChecked = (prefCode: string) => selectedprefs.includes(prefCode);
 
   return (
     <div>
-      <h1>市区町村を選択してください</h1>
+      <h1>都道府県を選択してください</h1>
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <ul>
-        {cities.map(city => (
-          <li key={city.cityCode}>
+        {prefs.map((pref) => (
+          <li key={pref.prefCode}>
             <label>
-              <input
+              {/* <input
                 type="checkbox"
-                checked={isChecked(city.cityCode)}
-                onChange={() => handleCheckboxChange(city.cityCode)}
-              />
-              {city.cityName}
+                checked={isChecked(pref.prefCode)}
+                onChange={() => handleCheckboxChange(pref.prefCode)}
+              /> */}
+              {pref.prefName}
             </label>
           </li>
         ))}
       </ul>
-      <h2>選択された市区町村:</h2>
+      {/* <h2>選択された都道府県:</h2>
       <ul>
-        {selectedCities.map(cityCode => {
-          const city = cities.find(c => c.cityCode === cityCode);
-          return <li key={cityCode}>{city?.cityName}</li>;
+        {selectedprefs.map((prefCode) => {
+          const pref = prefs.find((c) => c.prefCode === prefCode);
+          return <li key={prefCode}>{pref?.prefName}</li>;
         })}
-      </ul>
+      </ul> */}
     </div>
   );
-};
-*/
-export const Prefectures: React.FC = () => {
-  return <div>hoge</div>;
 };
