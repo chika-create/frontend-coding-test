@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { fetchprefs } from "../lib/fetchResasToken";
+import { Prefectures } from "./Prefectures";
 import { PopulationGraph } from "./PopulationGraph";
 
 export const PopulationPrefecturesGraph: FC<{
@@ -39,23 +40,7 @@ export const PopulationPrefecturesGraph: FC<{
 
   return (
     <div>
-      <h1>都道府県を選択してください</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <ul>
-        {prefs.map((pref) => (
-          <li key={pref.prefCode}>
-            <label>
-              {/* <input
-                type="checkbox"
-                checked={isChecked(pref.prefCode)}
-                onChange={() => handleCheckboxChange(pref.prefCode)}
-              /> */}
-              {pref.prefName}
-            </label>
-          </li>
-        ))}
-      </ul>
+      <Prefectures prefCode={prefCode} apikey={apikey} />
       <PopulationGraph prefCode={prefCode} />
     </div>
   );
