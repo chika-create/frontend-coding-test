@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { fetchprefs } from "../../lib/fetchReasasToken";
+import { fetchprefs } from "../lib/fetchReasasToken";
 
 export const PopulationhPrefecturesGrap: FC<{
   prefCode: number;
