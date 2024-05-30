@@ -27,6 +27,16 @@ export const Prefectures: FC<{
     })();
   }, [prefCode]);
 
+  // const handleCheckboxChange = (prefCode: string) => {
+  //   setSelectedprefs((prevState) =>
+  //     prevState.includes(prefCode)
+  //       ? prevState.filter((c) => c !== prefCode)
+  //       : [...prevState, prefCode]
+  //   );
+  // };
+
+  // const isChecked = (prefCode: string) => selectedprefs.includes(prefCode);
+
   return (
     <div>
       <h1>都道府県を選択してください</h1>
