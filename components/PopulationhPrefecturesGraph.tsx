@@ -4,15 +4,15 @@ import { Prefectures } from "./Prefectures";
 import { PopulationGraph } from "./PopulationGraph";
 
 export const PopulationPrefecturesGraph: FC<{
-  prefCode: number;
   apikey: string;
-}> = ({ prefCode, apikey }) => {
+}> = ({ apikey }) => {
   const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
     []
   );
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const API_KEY = apikey;
+  const prefCode = 0;
 
   useEffect(() => {
     (async () => {
@@ -26,22 +26,12 @@ export const PopulationPrefecturesGraph: FC<{
       }
       setLoading(false);
     })();
-  }, [prefCode]);
-
-  // const handleCheckboxChange = (prefCode: string) => {
-  //   setSelectedprefs((prevState) =>
-  //     prevState.includes(prefCode)
-  //       ? prevState.filter((c) => c !== prefCode)
-  //       : [...prevState, prefCode]
-  //   );
-  // };
-
-  // const isChecked = (prefCode: string) => selectedprefs.includes(prefCode);
+  }, []);
 
   return (
     <div>
       <Prefectures prefCode={prefCode} apikey={apikey} />
-      <PopulationGraph prefCode={prefCode} />
+      <PopulationGraph />
     </div>
   );
 };

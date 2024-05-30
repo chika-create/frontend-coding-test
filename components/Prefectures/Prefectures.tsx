@@ -17,7 +17,7 @@ export const Prefectures: FC<{
     (async () => {
       setLoading(true);
       setError(null);
-      const prefsData = await fetchprefs(prefCode, API_KEY);
+      const prefsData = await fetchprefs(API_KEY);
       if (!prefsData || prefsData.length === 0) {
         setError("Failed to fetch pref data");
       } else {
