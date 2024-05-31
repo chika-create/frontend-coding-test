@@ -1,10 +1,13 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Prefectures } from "./Prefectures";
 import { PopulationGraph } from "./PopulationGraph";
 
 export const PopulationPrefecturesGraph: FC<{
   apikey: string;
 }> = ({ apikey }) => {
+  // この状態が更新されたら、useEffect内のログが実行されます
+  const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
+
   // チェックボックスの変更を処理する関数
   const handleCheckboxChange = (code: string) => {
     console.log("code: ", code);
@@ -19,8 +22,10 @@ export const PopulationPrefecturesGraph: FC<{
     });
   };
 
-  // 選択された都道府県コードを管理するための状態
-  const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
+  // 状態確認用のログ
+  useEffect(() => {
+    console.log("更新された selectedPrefs: ", selectedPrefs);
+  }, [selectedPrefs]);
 
   return (
     <div>
