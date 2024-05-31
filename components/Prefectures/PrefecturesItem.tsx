@@ -11,7 +11,7 @@ export const PrefecturesItem: FC<{
   prefCode: number;
   selectedPrefs: string[];
   onCheckboxChange: (code: string) => void;
-}> = ({ pref, prefCode, selectedPrefs, onCheckboxChange }) => {
+}> = ({ pref, selectedPrefs, onCheckboxChange }) => {
   // 現在の都道府県が選択されているか確認
   const isChecked = selectedPrefs.includes(pref.prefCode);
   console.log(pref.prefCode);
