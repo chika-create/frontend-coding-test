@@ -27,15 +27,45 @@ export const Prefectures: FC<{
     })();
   }, [prefCode]);
 
-  // const handleCheckboxChange = (prefCode: string) => {
-  //   setSelectedprefs((prevState) =>
-  //     prevState.includes(prefCode)
-  //       ? prevState.filter((c) => c !== prefCode)
-  //       : [...prevState, prefCode]
-  //   );
+  // 選択された都道府県コードを管理するための状態
+  const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
+
+  // チェックボックスの変更を処理する関数
+  const handleCheckboxChange = (code: string) => {
+    console.log(code);
+    console.log("hoge");
+    setSelectedPrefs((currentSelected) => {
+      if (currentSelected.includes(code)) {
+        // 既に選択されている場合は除去
+        return currentSelected.filter((selectedCode) => selectedCode !== code);
+      } else {
+        // 選択されていない場合は追加
+        return [...currentSelected, code];
+      }
+    });
+  };
+
+  // 選択された都道府県コードの状態を更新する関数
+  // const handlePrefectureSelectionChange = (prefCode: string) => {
+  //   setSelectedPrefs(prevSelectedPrefs => {
+  //     // prefCodeが既に選択されているかをチェックする
+  //     const isAlreadySelected = prevSelectedPrefs.includes(prefCode);
+
+  //     if (isAlreadySelected) {
+  //       // 都道府県が選択済みなら、その都道府県を選択解除する
+  //       return prevSelectedPrefs.filter(code => code !== prefCode);
+  //     } else {
+  //       // 都道府県が未選択なら、それを選択状態に追加する
+  //       return [...prevSelectedPrefs, prefCode];
+  //     }
+  //   });
   // };
 
-  // const isChecked = (prefCode: string) => selectedprefs.includes(prefCode);
+  // // 特定の都道府県コードが選択済みかをチェックする関数
+  // const isPrefectureSelected = (prefCode: string) => {
+  //   // 選択された都道府県の中に prefCode が含まれているかを返す
+  //   return selectedPrefs.includes(prefCode);
+  // };
 
   return (
     <div>
@@ -43,8 +73,14 @@ export const Prefectures: FC<{
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       <ul>
-        {prefs.map((pref, index) => (
-          <PrefecturesItem pref={pref} prefCode={prefCode} key={index} />
+        {prefs.map((pref) => (
+          <PrefecturesItem
+            pref={pref}
+            prefCode={prefCode}
+            key={pref.prefCode}
+            selectedPrefs={selectedPrefs}
+            onCheckboxChange={handleCheckboxChange}
+          />
         ))}
       </ul>
     </div>
