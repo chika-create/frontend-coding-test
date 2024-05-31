@@ -44,28 +44,6 @@ export const Prefectures: FC<{
     });
   };
 
-  // 選択された都道府県コードの状態を更新する関数
-  // const handlePrefectureSelectionChange = (prefCode: string) => {
-  //   setSelectedPrefs(prevSelectedPrefs => {
-  //     // prefCodeが既に選択されているかをチェックする
-  //     const isAlreadySelected = prevSelectedPrefs.includes(prefCode);
-
-  //     if (isAlreadySelected) {
-  //       // 都道府県が選択済みなら、その都道府県を選択解除する
-  //       return prevSelectedPrefs.filter(code => code !== prefCode);
-  //     } else {
-  //       // 都道府県が未選択なら、それを選択状態に追加する
-  //       return [...prevSelectedPrefs, prefCode];
-  //     }
-  //   });
-  // };
-
-  // // 特定の都道府県コードが選択済みかをチェックする関数
-  // const isPrefectureSelected = (prefCode: string) => {
-  //   // 選択された都道府県の中に prefCode が含まれているかを返す
-  //   return selectedPrefs.includes(prefCode);
-  // };
-
   return (
     <div>
       <h1>都道府県を選択してください</h1>
