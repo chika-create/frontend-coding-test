@@ -75,7 +75,7 @@ export const Prefectures: FC<{
         {prefs.map((pref) => (
           <PrefecturesItem
             pref={pref}
-            prefCode={pref.prefCode}
+            prefCode={Number(pref.prefCode)}
             key={pref.prefCode}
             selectedPrefs={selectedPrefs}
             onCheckboxChange={handleCheckboxChange}
