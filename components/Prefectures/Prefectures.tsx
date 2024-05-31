@@ -5,8 +5,8 @@ import { PrefecturesItem } from "./PrefecturesItem";
 export const Prefectures: FC<{
   prefCode: number;
   apikey: string;
-  handleCheckboxChange: any;
-  selectedPrefs: any;
+  handleCheckboxChange: (code: string) => void;
+  selectedPrefs: string[];
 }> = ({ prefCode, apikey, handleCheckboxChange, selectedPrefs }) => {
   const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
     []
