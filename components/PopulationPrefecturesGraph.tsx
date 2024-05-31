@@ -5,8 +5,6 @@ import { PopulationGraph } from "./PopulationGraph";
 export const PopulationPrefecturesGraph: FC<{
   apikey: string;
 }> = ({ apikey }) => {
-  const prefCode = 0;
-
   // チェックボックスの変更を処理する関数
   const handleCheckboxChange = (code: string) => {
     console.log("code: ", code);
@@ -27,7 +25,6 @@ export const PopulationPrefecturesGraph: FC<{
   return (
     <div>
       <Prefectures
-        prefCode={prefCode}
         apikey={apikey}
         handleCheckboxChange={handleCheckboxChange}
         selectedPrefs={selectedPrefs}

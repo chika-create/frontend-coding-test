@@ -3,11 +3,10 @@ import { fetchprefs } from "../../lib/fetchResasToken";
 import { PrefecturesItem } from "./PrefecturesItem";
 
 export const Prefectures: FC<{
-  prefCode: number;
   apikey: string;
   handleCheckboxChange: (code: string) => void;
   selectedPrefs: string[];
-}> = ({ prefCode, apikey, handleCheckboxChange, selectedPrefs }) => {
+}> = ({ apikey, handleCheckboxChange, selectedPrefs }) => {
   const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
     []
   );
@@ -26,7 +25,7 @@ export const Prefectures: FC<{
       }
       setLoading(false);
     })();
-  }, [prefCode, apikey]);
+  }, [apikey]);
 
   return (
     <div>
