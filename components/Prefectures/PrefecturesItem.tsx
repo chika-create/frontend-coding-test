@@ -1,7 +1,13 @@
 import { FC } from "react";
 
+// 都道府県の型を定義
+interface Prefecture {
+  prefCode: string;
+  prefName: string;
+}
+
 export const PrefecturesItem: FC<{
-  pref: any;
+  pref: Prefecture;
   prefCode: number;
   selectedPrefs: string[];
   onCheckboxChange: (code: string) => void;
