@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { LoaderFunction } from "@remix-run/node";
-import { PopulationPrefecturesGraph } from "../../components/PopulationhPrefecturesGraph";
+import { PopulationPrefecturesGraph } from "../../components/PopulationPrefecturesGraph";
 
 export const meta: MetaFunction = () => {
   return [
