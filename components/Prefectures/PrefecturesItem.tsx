@@ -22,7 +22,7 @@ export const PrefecturesItem: FC<{
           type="checkbox"
           checked={isChecked}
           value={pref.prefCode}
-          onChange={() => onCheckboxChange(pref.prefCode)}
+          onChange={(e) => onCheckboxChange(e.target.value)}
         />
         {pref.prefName}
       </label>

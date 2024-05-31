@@ -32,7 +32,7 @@ export const Prefectures: FC<{
 
   // チェックボックスの変更を処理する関数
   const handleCheckboxChange = (code: string) => {
-    console.log(code);
+    console.log("code: ", code);
     console.log("hoge");
     setSelectedPrefs((currentSelected) => {
       if (currentSelected.includes(code)) {
