@@ -19,7 +19,7 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function Index() {
-  const data = useLoaderData();
+  const data: { apiKey: string } = useLoaderData();
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
