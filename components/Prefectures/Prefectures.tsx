@@ -11,13 +11,12 @@ export const Prefectures: FC<{
   );
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const API_KEY = apikey;
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       setError(null);
-      const prefsData = await fetchprefs(API_KEY);
+      const prefsData = await fetchprefs(apikey);
       if (!prefsData || prefsData.length === 0) {
         setError("Failed to fetch pref data");
       } else {
@@ -25,7 +24,7 @@ export const Prefectures: FC<{
       }
       setLoading(false);
     })();
-  }, [prefCode]);
+  }, [prefCode, apikey]);
 
   // 選択された都道府県コードを管理するための状態
   const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
