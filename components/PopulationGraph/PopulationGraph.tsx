@@ -1,5 +1,15 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+interface PopulationGraphProps {
+  apiKey: string;
+  selectedPrefs: string[];
+}
+
+interface PopulationData {
+  year: number;
+  value: number;
+}
 
 const data = [
   { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
@@ -14,6 +24,9 @@ const data = [
 export const PopulationGraph: FC = () => {
   // const [prefs, setPrefs] = useState<{ prefCode: string; prefName: string }[]>([]);
   // const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
+  const [populationData, setPopulationData] = useState<{ [key: string]: PopulationData[] }>({});
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <>
