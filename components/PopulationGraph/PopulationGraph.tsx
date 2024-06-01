@@ -1,11 +1,9 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 
-export const PopulationGraph: FC<{
-  prefCode: number;
-}> = ({ prefCode }) => {
-  const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
-    []
-  );
+export const PopulationGraph: FC = () => {
+  // const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
+  //   []
+  // );
   // const [selectedprefs, setSelectedprefs] = useState<string[]>([]);
 
   return (

@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { LoaderFunction } from "@remix-run/node";
-import { PopulationPrefecturesGraph } from "../../components/PopulationhPrefecturesGraph";
+import { PopulationPrefecturesGraph } from "../../components/PopulationPrefecturesGraph";
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,7 +19,7 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function Index() {
-  const data = useLoaderData();
+  const data: { apiKey: string } = useLoaderData();
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>

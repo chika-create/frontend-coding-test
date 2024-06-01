@@ -1,4 +1,4 @@
-export const fetchprefs = async (prefCode: number, API_KEY: string) => {
+export const fetchprefs = async (API_KEY: string) => {
   try {
     const response = await fetch(
       `https://opendata.resas-portal.go.jp/api/v1/prefectures`,
@@ -12,7 +12,7 @@ export const fetchprefs = async (prefCode: number, API_KEY: string) => {
     const data = await response.json();
     return data.result;
   } catch (error) {
-    console.error("Error fetching prefs:", error);
+    console.error("Error fetching api:", error);
     return [];
   }
 };
