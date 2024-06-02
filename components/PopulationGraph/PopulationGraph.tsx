@@ -52,6 +52,23 @@ export const PopulationGraph: FC<PopulationGraphProps>  = ({apikey, selectedPref
     name: `Pref ${prefCode}`
   }));
 
+  const generateGraphData = () => {
+    const graphData: { [key: string]: any } = {};
+
+    for (const [prefCode, data] of Object.entries(populationData)) {
+      data.forEach((yearData) => {
+        if (!graphData[yearData.year]) {
+          graphData[yearData.year] = { year: yearData.year };
+        }
+        graphData[yearData.year][prefCode] = yearData.value;
+      });
+    }
+
+    return Object.values(graphData);
+  };
+
+  const graphData = generateGraphData();
+
   return (
     <>
       <div>
@@ -77,8 +94,13 @@ export const PopulationGraph: FC<PopulationGraphProps>  = ({apikey, selectedPref
           <YAxis />
           <Tooltip />
           <Legend />
-          {keys.map(({ dataKey, name }) => (
-            <Line key={dataKey} type="monotone" dataKey={dataKey} name={name} stroke="#8884d8" activeDot={{ r: 8 }} />
+          {Object.keys(populationData).map((prefCode, index) => (
+            <Line
+              key={prefCode}
+              type="monotone"
+              dataKey={prefCode}
+              stroke={`hsl(${(index * 137.5) % 360}, 70%, 50%)`}
+            />
           ))}
         </LineChart>
       </ResponsiveContainer>
