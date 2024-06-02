@@ -53,6 +53,18 @@ export const PopulationGraph: FC<{
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
+  const mergedData = selectedPrefs.flatMap(prefCode => 
+    populationData[prefCode]?.map(d => ({
+      year: d.year,
+      [prefCode]: d.value
+    })) ?? []
+  );
+
+  const keys = selectedPrefs.map(prefCode => ({
+    dataKey: prefCode,
+    name: `Pref ${prefCode}`
+  }));
+
   return (
     <>
       <div>
@@ -63,6 +75,26 @@ export const PopulationGraph: FC<{
           })}
         </ul>
       </div>
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart
+          data={mergedData}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="year" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          {keys.map(({ dataKey, name }) => (
+            <Line key={dataKey} type="monotone" dataKey={dataKey} name={name} stroke="#8884d8" activeDot={{ r: 8 }} />
+          ))}
+        </LineChart>
+      </ResponsiveContainer>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           data={data}
