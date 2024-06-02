@@ -1,5 +1,6 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { fetchPopulationData } from "../../lib/fetchPopulationData"
 
 interface PopulationGraphProps {
   apiKey: string;
@@ -21,12 +22,34 @@ const data = [
   { name: 'Page G', uv: 3490, pv: 4300, amt: 2100 },
 ];
 
-export const PopulationGraph: FC = () => {
+export const PopulationGraph: FC<{
+  apikey: string;
+}>  = ({apikey}) => {
   // const [prefs, setPrefs] = useState<{ prefCode: string; prefName: string }[]>([]);
-  // const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
+  const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
   const [populationData, setPopulationData] = useState<{ [key: string]: PopulationData[] }>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+
+      const newPopulationData: { [key: string]: PopulationData[] } = {};
+      for (const prefCode of selectedPrefs) {
+        const data = await fetchPopulationData(apikey, Number(prefCode));
+        if (data.length === 0) {
+          setError('Failed to fetch population data');
+        }
+        newPopulationData[prefCode] = data;
+      }
+      
+      setPopulationData(newPopulationData);
+      setLoading(false);
+    };
+    fetchData();
+  }, [selectedPrefs]);
 
   return (
     <>

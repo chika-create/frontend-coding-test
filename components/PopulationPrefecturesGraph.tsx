@@ -34,7 +34,7 @@ export const PopulationPrefecturesGraph: FC<{
         handleCheckboxChange={handleCheckboxChange}
         selectedPrefs={selectedPrefs}
       />
-      <PopulationGraph />
+      <PopulationGraph apikey={apikey} />
     </div>
   );
 };
