@@ -55,10 +55,9 @@ export const PopulationGraph: FC<{
       <div>
         <h2>選択された都道府県:</h2>
         <ul>
-          {/* {selectedPrefs.map((prefCode) => {
-            const pref = prefs.find((c) => c.prefCode === prefCode);
-            return <li key={prefCode}>{pref?.prefName}</li>;
-          })} */}
+          {selectedPrefs.map((prefCode) => {
+            return <li key={prefCode}>{prefCode}</li>;
+          })}
         </ul>
       </div>
       <ResponsiveContainer width="100%" height={400}>
