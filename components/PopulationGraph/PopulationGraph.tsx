@@ -24,9 +24,8 @@ const data = [
 
 export const PopulationGraph: FC<{
   apikey: string;
-}>  = ({apikey}) => {
-  // const [prefs, setPrefs] = useState<{ prefCode: string; prefName: string }[]>([]);
-  const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
+  selectedPrefs: string[];
+}>  = ({apikey, selectedPrefs}) => {
   const [populationData, setPopulationData] = useState<{ [key: string]: PopulationData[] }>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
