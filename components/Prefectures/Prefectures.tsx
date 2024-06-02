@@ -25,7 +25,7 @@ export const Prefectures: FC<{
       }
       setLoading(false);
     })();
-  }, [apikey]);
+  }, []);
 
   return (
     <div>
