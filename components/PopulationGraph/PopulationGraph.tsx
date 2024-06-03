@@ -54,19 +54,6 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
-  // const mergedData = selectedPrefs.flatMap(
-  //   (prefCode) =>
-  //     populationData[prefCode]?.map((d) => ({
-  //       year: d.year,
-  //       [prefCode]: d.value,
-  //     })) ?? []
-  // );
-
-  // const keys = selectedPrefs.map((prefCode) => ({
-  //   dataKey: prefCode,
-  //   name: `Pref ${prefCode}`,
-  // }));
-
   const generateGraphData = () => {
     const graphData: { [key: string]: any } = {};
 
@@ -83,22 +70,6 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
   };
 
   const graphData = generateGraphData();
-  console.log("graphData: ", graphData);
-
-  // function mergePrefectureData(prefecturesData) {
-  //   const mergedData = {};
-
-  //   prefecturesData.forEach(prefecture => {
-  //     prefecture.data.forEach(dataPoint => {
-  //       if (!mergedData[dataPoint.year]) {
-  //         mergedData[dataPoint.year] = { year: dataPoint.year };
-  //       }
-  //       mergedData[dataPoint.year][prefecture.prefCode] = dataPoint.value;
-  //     });
-  //   });
-
-  //   return Object.values(mergedData);
-  // }
 
   return (
     <>
