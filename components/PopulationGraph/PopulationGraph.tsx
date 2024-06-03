@@ -21,6 +21,13 @@ interface PopulationData {
   value: number;
 }
 
+type GraphDataType = {
+  [year: string]: {
+    year: number;
+    [prefCode: string]: number | undefined;
+  };
+};
+
 export const PopulationGraph: FC<PopulationGraphProps> = ({
   apikey,
   selectedPrefs,
@@ -54,8 +61,11 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
-  const generateGraphData = () => {
-    const graphData: { [key: string]: any } = {};
+  const generateGraphData = (): {
+    year: number;
+    [prefCode: string]: number | undefined;
+  }[] => {
+    const graphData: GraphDataType = {};
 
     for (const [prefCode, data] of Object.entries(populationData)) {
       data.forEach((yearData) => {
