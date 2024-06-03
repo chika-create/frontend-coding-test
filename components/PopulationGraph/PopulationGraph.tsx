@@ -1,6 +1,15 @@
-import React, { FC, useState, useEffect } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { fetchPopulationData } from "../../lib/fetchPopulationData"
+import { FC, useState, useEffect } from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import { fetchPopulationData } from "../../lib/fetchPopulationData";
 
 interface PopulationGraphProps {
   apikey: string;
@@ -12,8 +21,13 @@ interface PopulationData {
   value: number;
 }
 
-export const PopulationGraph: FC<PopulationGraphProps>  = ({apikey, selectedPrefs}) => {
-  const [populationData, setPopulationData] = useState<{ [key: string]: PopulationData[] }>({});
+export const PopulationGraph: FC<PopulationGraphProps> = ({
+  apikey,
+  selectedPrefs,
+}) => {
+  const [populationData, setPopulationData] = useState<{
+    [key: string]: PopulationData[];
+  }>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,31 +40,32 @@ export const PopulationGraph: FC<PopulationGraphProps>  = ({apikey, selectedPref
       for (const prefCode of selectedPrefs) {
         const data = await fetchPopulationData(apikey, Number(prefCode));
         if (data.length === 0) {
-          setError('Failed to fetch population data');
+          setError("Failed to fetch population data");
         }
         newPopulationData[prefCode] = data;
       }
-      
+
       setPopulationData(newPopulationData);
       setLoading(false);
     };
     fetchData();
-  }, [selectedPrefs]);
+  }, [selectedPrefs, apikey]);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
-  const mergedData = selectedPrefs.flatMap(prefCode => 
-    populationData[prefCode]?.map(d => ({
-      year: d.year,
-      [prefCode]: d.value
-    })) ?? []
-  );
+  // const mergedData = selectedPrefs.flatMap(
+  //   (prefCode) =>
+  //     populationData[prefCode]?.map((d) => ({
+  //       year: d.year,
+  //       [prefCode]: d.value,
+  //     })) ?? []
+  // );
 
-  const keys = selectedPrefs.map(prefCode => ({
-    dataKey: prefCode,
-    name: `Pref ${prefCode}`
-  }));
+  // const keys = selectedPrefs.map((prefCode) => ({
+  //   dataKey: prefCode,
+  //   name: `Pref ${prefCode}`,
+  // }));
 
   const generateGraphData = () => {
     const graphData: { [key: string]: any } = {};
@@ -68,6 +83,22 @@ export const PopulationGraph: FC<PopulationGraphProps>  = ({apikey, selectedPref
   };
 
   const graphData = generateGraphData();
+  console.log("graphData: ", graphData);
+
+  // function mergePrefectureData(prefecturesData) {
+  //   const mergedData = {};
+
+  //   prefecturesData.forEach(prefecture => {
+  //     prefecture.data.forEach(dataPoint => {
+  //       if (!mergedData[dataPoint.year]) {
+  //         mergedData[dataPoint.year] = { year: dataPoint.year };
+  //       }
+  //       mergedData[dataPoint.year][prefecture.prefCode] = dataPoint.value;
+  //     });
+  //   });
+
+  //   return Object.values(mergedData);
+  // }
 
   return (
     <>
@@ -81,7 +112,7 @@ export const PopulationGraph: FC<PopulationGraphProps>  = ({apikey, selectedPref
       </div>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
-          data={mergedData}
+          data={graphData}
           margin={{
             top: 5,
             right: 30,
