@@ -47,11 +47,15 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
 
       const newPopulationData: { [key: string]: PopulationData[] } = {};
       for (const prefCode of selectedPrefs) {
-        const data = await fetchPopulationData(apikey, Number(prefCode));
-        if (data.length === 0) {
-          setError("Failed to fetch population data");
-        } else {
-          newPopulationData[prefCode] = data;
+        try {
+          const data = await fetchPopulationData(apikey, Number(prefCode));
+          if (data.length === 0) {
+            setError("Failed to fetch population data");
+          } else {
+            newPopulationData[prefCode] = data;
+          }
+        } catch (e) {
+          setError(`Failed to fetch population data for prefCode: ${prefCode}`);
         }
       }
       setPopulationData(newPopulationData);
@@ -70,19 +74,23 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
   }[] => {
     const graphData: GraphDataType = {};
 
-    // Object.entriesでオブジェクトを配列に変換
+    // オブジェクトをエントリー（ペア）に変換して繰り返す
     for (const [prefCode, data] of Object.entries(populationData)) {
       data.forEach((yearData) => {
+        // 年ごとのエントリがない場合は初期化する
         if (!graphData[yearData.year]) {
           graphData[yearData.year] = { year: yearData.year };
         }
+        // 年ごとのエントリに都道府県のデータを追加
         graphData[yearData.year][prefCode] = yearData.value;
       });
     }
 
-    return Object.values(graphData);
+    // オブジェクトを配列に変換し年ごとにソート
+    return Object.values(graphData).sort((a, b) => a.year - b.year);
   };
 
+  // グラフデータを生成
   const graphData = generateGraphData();
 
   return (
