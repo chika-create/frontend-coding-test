@@ -32,12 +32,14 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
   apikey,
   selectedPrefs,
 }) => {
+  // 各都道府県の人口データを格納
   const [populationData, setPopulationData] = useState<{
     [key: string]: PopulationData[];
   }>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  // 選択した都道府県の人口データを取得し格納
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -48,10 +50,10 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
         const data = await fetchPopulationData(apikey, Number(prefCode));
         if (data.length === 0) {
           setError("Failed to fetch population data");
+        } else {
+          newPopulationData[prefCode] = data;
         }
-        newPopulationData[prefCode] = data;
       }
-
       setPopulationData(newPopulationData);
       setLoading(false);
     };
@@ -61,12 +63,14 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
+  // 取得した人口データをRechartsで利用できる形に変換
   const generateGraphData = (): {
     year: number;
     [prefCode: string]: number | undefined;
   }[] => {
     const graphData: GraphDataType = {};
 
+    // Object.entriesでオブジェクトを配列に変換
     for (const [prefCode, data] of Object.entries(populationData)) {
       data.forEach((yearData) => {
         if (!graphData[yearData.year]) {
