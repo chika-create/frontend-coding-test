@@ -10,7 +10,6 @@ export const PopulationPrefecturesGraph: FC<{
 
   // チェックボックスの変更を処理する関数
   const handleCheckboxChange = (code: string) => {
-    console.log("code: ", code);
     setSelectedPrefs((currentSelected) => {
       if (currentSelected.includes(code)) {
         // 既に選択されている場合は除去
@@ -23,9 +22,9 @@ export const PopulationPrefecturesGraph: FC<{
   };
 
   // 状態確認用のログ
-  useEffect(() => {
-    console.log("更新された selectedPrefs: ", selectedPrefs);
-  }, [selectedPrefs]);
+  // useEffect(() => {
+  //   console.log("更新された selectedPrefs: ", selectedPrefs);
+  // }, [selectedPrefs]);
 
   return (
     <div>
@@ -34,7 +33,7 @@ export const PopulationPrefecturesGraph: FC<{
         handleCheckboxChange={handleCheckboxChange}
         selectedPrefs={selectedPrefs}
       />
-      <PopulationGraph />
+      <PopulationGraph apikey={apikey} selectedPrefs={selectedPrefs} />
     </div>
   );
 };
