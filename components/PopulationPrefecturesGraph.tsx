@@ -10,7 +10,6 @@ export const PopulationPrefecturesGraph: FC<{
 
   // チェックボックスの変更を処理する関数
   const handleCheckboxChange = (code: string) => {
-    console.log("code: ", code);
     setSelectedPrefs((currentSelected) => {
       if (currentSelected.includes(code)) {
         // 既に選択されている場合は除去
