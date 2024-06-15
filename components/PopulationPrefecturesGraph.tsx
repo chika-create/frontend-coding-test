@@ -23,9 +23,9 @@ export const PopulationPrefecturesGraph: FC<{
   };
 
   // 状態確認用のログ
-  useEffect(() => {
-    console.log("更新された selectedPrefs: ", selectedPrefs);
-  }, [selectedPrefs]);
+  // useEffect(() => {
+  //   console.log("更新された selectedPrefs: ", selectedPrefs);
+  // }, [selectedPrefs]);
 
   return (
     <div>
