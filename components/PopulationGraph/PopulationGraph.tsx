@@ -7,6 +7,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  ReferenceLine,
 } from "recharts";
 import { fetchPopulationData } from "../../lib/fetchPopulationData";
 
@@ -104,6 +105,14 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
+          {graphData.map((entry) => (
+            <ReferenceLine
+              x={entry.year}
+              stroke="none"
+              key={`refline-${entry.year}`}
+              label={{ position: "bottom", value: entry.year }}
+            />
+          ))}
           <YAxis />
           <Tooltip />
           <Legend />
@@ -120,3 +129,5 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
     </>
   );
 };
+
+export default PopulationGraph;
