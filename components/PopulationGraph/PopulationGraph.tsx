@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { fetchPopulationData } from "../../lib/fetchPopulationData";
+import CustomXAxis from "../../lib/customXAxis";
 
 interface PopulationGraphProps {
   apikey: string;
@@ -114,7 +115,7 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="year" />
+          <CustomXAxis dataKey="year" />
           <YAxis />
           <Tooltip />
           <Legend />
