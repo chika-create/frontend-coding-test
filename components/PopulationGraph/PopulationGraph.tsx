@@ -117,7 +117,7 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
         <h2>選択された都道府県:</h2>
         <ul>
           {selectedPrefs.map((prefCode) => {
-            return <li key={prefCode}>{prefCode}</li>;
+            return <li key={prefCode}>{prefectureNames[prefCode]}</li>;
           })}
         </ul>
       </div>
@@ -141,6 +141,7 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
               key={prefCode}
               type="monotone"
               dataKey={prefCode}
+              name={prefectureNames[prefCode]}
               stroke={`hsl(${(index * 137.5) % 360}, 70%, 50%)`}
             />
           ))}
