@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { fetchPopulationData } from "../../lib/fetchPopulationData";
+import { fetchPrefectureNames } from "../../lib/fetchPrefectureNames";
 import CustomXAxis from "../../lib/customXAxis";
 import CustomYAxis from "../../lib/customYAxis";
 
@@ -36,8 +37,25 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
   const [populationData, setPopulationData] = useState<{
     [key: string]: PopulationData[];
   }>({});
+  const [prefectureNames, setPrefectureNames] = useState<{
+    [key: string]: string;
+  }>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  // 都道府県名を取得する
+  useEffect(() => {
+    const fetchPrefNames = async () => {
+      try {
+        const names = await fetchPrefectureNames(apikey);
+        setPrefectureNames(names);
+      } catch (e) {
+        setError("Failed to fetch prefecture names");
+      }
+    };
+
+    fetchPrefNames();
+  }, [apikey]);
 
   // 選択した都道府県の人口データを取得し格納
   useEffect(() => {
@@ -99,7 +117,7 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
         <h2>選択された都道府県:</h2>
         <ul>
           {selectedPrefs.map((prefCode) => {
-            return <li key={prefCode}>{prefCode}</li>;
+            return <li key={prefCode}>{prefectureNames[prefCode]}</li>;
           })}
         </ul>
       </div>
@@ -123,6 +141,7 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
               key={prefCode}
               type="monotone"
               dataKey={prefCode}
+              name={prefectureNames[prefCode]}
               stroke={`hsl(${(index * 137.5) % 360}, 70%, 50%)`}
             />
           ))}
