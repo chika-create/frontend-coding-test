@@ -2,8 +2,6 @@ import { FC, useState, useEffect } from "react";
 import {
   LineChart,
   Line,
-  XAxis,
-  YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
@@ -11,6 +9,7 @@ import {
 } from "recharts";
 import { fetchPopulationData } from "../../lib/fetchPopulationData";
 import CustomXAxis from "../../lib/customXAxis";
+import CustomYAxis from "../../lib/customYAxis";
 
 interface PopulationGraphProps {
   apikey: string;
@@ -116,7 +115,7 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
         >
           <CartesianGrid strokeDasharray="3 3" />
           <CustomXAxis dataKey="year" />
-          <YAxis />
+          <CustomYAxis />
           <Tooltip />
           <Legend />
           {Object.keys(populationData).map((prefCode, index) => (
