@@ -6,11 +6,11 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  XAxis,
+  YAxis,
 } from "recharts";
 import { fetchPopulationData } from "../../lib/fetchPopulationData";
 import { fetchPrefectureNames } from "../../lib/fetchPrefectureNames";
-import CustomXAxis from "../../lib/customXAxis";
-import CustomYAxis from "../../lib/customYAxis";
 
 interface PopulationGraphProps {
   apikey: string;
@@ -132,8 +132,13 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <CustomXAxis dataKey="year" />
-          <CustomYAxis />
+          <XAxis
+            dataKey="year"
+            label={{ value: "年度", position: "insideBottomRight", offset: 0 }}
+          />
+          <YAxis
+            label={{ value: "人口", angle: -90, position: "insideLeft" }}
+          />
           <Tooltip />
           <Legend />
           {Object.keys(populationData).map((prefCode, index) => (
