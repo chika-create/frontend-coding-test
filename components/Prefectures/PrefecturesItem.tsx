@@ -8,20 +8,20 @@ interface Prefecture {
 
 export const PrefecturesItem: FC<{
   pref: Prefecture;
-  prefCode: number;
+  prefCode: string;
   selectedPrefs: string[];
   onCheckboxChange: (code: string) => void;
-}> = ({ pref, selectedPrefs, onCheckboxChange }) => {
+}> = ({ pref, prefCode, selectedPrefs, onCheckboxChange }) => {
   // 現在の都道府県が選択されているか確認
-  const isChecked = selectedPrefs.includes(pref.prefCode);
+  const isChecked = selectedPrefs.includes(prefCode);
   return (
-    <li key={pref.prefCode}>
+    <li key={prefCode}>
       <label>
         <input
           type="checkbox"
           checked={isChecked}
-          value={pref.prefCode}
-          onChange={() => onCheckboxChange(pref.prefCode)}
+          value={prefCode}
+          onChange={() => onCheckboxChange(prefCode)}
         />
         {pref.prefName}
       </label>
