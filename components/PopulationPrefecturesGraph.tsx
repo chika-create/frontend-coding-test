@@ -2,9 +2,7 @@ import { FC, useState, useEffect } from "react";
 import { Prefectures } from "./Prefectures";
 import { PopulationGraph } from "./PopulationGraph";
 
-export const PopulationPrefecturesGraph: FC<{
-  apikey: string;
-}> = ({ apikey }) => {
+export const PopulationPrefecturesGraph: FC = () => {
   // この状態が更新されたら、useEffect内のログが実行されます
   const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
 
@@ -29,11 +27,10 @@ export const PopulationPrefecturesGraph: FC<{
   return (
     <div>
       <Prefectures
-        apikey={apikey}
         handleCheckboxChange={handleCheckboxChange}
         selectedPrefs={selectedPrefs}
       />
-      <PopulationGraph apikey={apikey} selectedPrefs={selectedPrefs} />
+      <PopulationGraph selectedPrefs={selectedPrefs} />
     </div>
   );
 };

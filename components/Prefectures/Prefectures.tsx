@@ -1,12 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { fetchprefs } from "../../lib/fetchResasToken";
+import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 import { PrefecturesItem } from "./PrefecturesItem";
 
 export const Prefectures: FC<{
-  apikey: string;
   handleCheckboxChange: (code: string) => void;
   selectedPrefs: string[];
-}> = ({ apikey, handleCheckboxChange, selectedPrefs }) => {
+}> = ({ handleCheckboxChange, selectedPrefs }) => {
+  const apikey = useFetchApiKey();
   const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
     []
   );
