@@ -1,6 +1,4 @@
 import type { MetaFunction } from "@remix-run/node";
-import { LoaderFunction } from "@remix-run/node";
-import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 import { PopulationPrefecturesGraph } from "../../components/PopulationPrefecturesGraph";
 
 export const meta: MetaFunction = () => {
@@ -13,13 +11,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader: LoaderFunction = async () => {
-  const API_KEY = process.env.RESAS_API_KEY;
-  return { apiKey: API_KEY };
-};
-
 export default function Index() {
-  const apikey = useFetchApiKey();
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>都道府県別の総人口推移グラフ</h1>
