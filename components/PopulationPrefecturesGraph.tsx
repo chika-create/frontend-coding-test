@@ -3,14 +3,13 @@ import { Prefectures } from "./Prefectures";
 import { PopulationGraph } from "./PopulationGraph";
 
 export const PopulationPrefecturesGraph: FC = () => {
-  // この状態が更新されたら、useEffect内のログが実行されます
   const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
 
   // チェックボックスの変更を処理する関数
   const handleCheckboxChange = (code: string) => {
     setSelectedPrefs((currentSelected) => {
       if (currentSelected.includes(code)) {
-        // 既に選択されている場合は除去
+        // 既に選択されている場合は削除
         return currentSelected.filter((selectedCode) => selectedCode !== code);
       } else {
         // 選択されていない場合は追加
