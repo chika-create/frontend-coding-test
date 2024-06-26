@@ -29,7 +29,7 @@ export const Prefectures: FC<{
 
   return (
     <div>
-      <h1>都道府県を選択してください</h1>
+      <h2>都道府県を選択してください</h2>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       <ul>
