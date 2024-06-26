@@ -19,12 +19,12 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function Index() {
-  const data: { apiKey: string } = useLoaderData();
+  const { apiKey: apikey } = useLoaderData<{ apiKey: string }>();
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>都道府県別の総人口推移グラフ</h1>
-      <PopulationPrefecturesGraph apikey={data.apiKey} />
+      <PopulationPrefecturesGraph apikey={apikey} />
     </div>
   );
 }
