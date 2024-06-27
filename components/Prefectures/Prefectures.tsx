@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { fetchprefs } from "../../lib/fetchResasToken";
+import { fetchPrefs } from "../../lib/fetchPrefs";
 import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 import { PrefecturesItem } from "./PrefecturesItem";
 
@@ -23,7 +23,7 @@ export const Prefectures: FC<PrefecturesProps> = ({
     (async () => {
       setLoading(true);
       setError(null);
-      const prefsData = await fetchprefs(apikey);
+      const prefsData = await fetchPrefs(apikey);
       if (!prefsData || prefsData.length === 0) {
         setError("Failed to fetch pref data");
       } else {
