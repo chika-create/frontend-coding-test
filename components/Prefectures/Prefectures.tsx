@@ -16,17 +16,17 @@ export const Prefectures: FC<PrefecturesProps> = ({
   const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
     []
   );
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
   // 都道府県のデータを取得
   useEffect(() => {
     (async () => {
       setLoading(true);
-      setError(null);
+      setError(false);
       const prefsData = await fetchPrefs(apikey);
       if (!prefsData || prefsData.length === 0) {
-        setError("Failed to fetch pref data");
+        setError(true);
       } else {
         setprefs(prefsData);
       }
