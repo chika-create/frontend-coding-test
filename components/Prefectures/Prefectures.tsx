@@ -19,6 +19,7 @@ export const Prefectures: FC<PrefecturesProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  // 都道府県のデータを取得
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -33,11 +34,12 @@ export const Prefectures: FC<PrefecturesProps> = ({
     })();
   }, [apikey]);
 
+  if (error) return null;
+
   return (
     <div>
       <h2>都道府県を選択してください</h2>
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
       <ul>
         {prefs.map((pref) => (
           <PrefecturesItem
