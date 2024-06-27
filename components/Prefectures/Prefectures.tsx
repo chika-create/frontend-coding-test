@@ -13,7 +13,7 @@ export const Prefectures: FC<PrefecturesProps> = ({
   selectedPrefs,
 }) => {
   const apikey = useFetchApiKey();
-  const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
+  const [prefs, setPrefs] = useState<{ prefCode: string; prefName: string }[]>(
     []
   );
   const [error, setError] = useState<boolean>(false);
@@ -28,7 +28,7 @@ export const Prefectures: FC<PrefecturesProps> = ({
       if (!prefsData || prefsData.length === 0) {
         setError(true);
       } else {
-        setprefs(prefsData);
+        setPrefs(prefsData);
       }
       setLoading(false);
     })();
@@ -46,6 +46,7 @@ export const Prefectures: FC<PrefecturesProps> = ({
             key={pref.prefCode}
             pref={pref}
             selectedPrefs={selectedPrefs}
+            // ↓これはcontextに置き換える
             onCheckboxChange={handleCheckboxChange}
           />
         ))}
