@@ -1,44 +1,52 @@
 import { FC, useEffect, useState } from "react";
-import { fetchprefs } from "../../lib/fetchResasToken";
+import { fetchPrefs } from "../../lib/fetchPrefs";
+import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 import { PrefecturesItem } from "./PrefecturesItem";
 
-export const Prefectures: FC<{
-  apikey: string;
+interface PrefecturesProps {
   handleCheckboxChange: (code: string) => void;
   selectedPrefs: string[];
-}> = ({ apikey, handleCheckboxChange, selectedPrefs }) => {
-  const [prefs, setprefs] = useState<{ prefCode: string; prefName: string }[]>(
+}
+
+export const Prefectures: FC<PrefecturesProps> = ({
+  handleCheckboxChange,
+  selectedPrefs,
+}) => {
+  const apikey = useFetchApiKey();
+  const [prefs, setPrefs] = useState<{ prefCode: string; prefName: string }[]>(
     []
   );
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
+  // 都道府県のデータを取得
   useEffect(() => {
     (async () => {
       setLoading(true);
-      setError(null);
-      const prefsData = await fetchprefs(apikey);
+      setError(false);
+      const prefsData = await fetchPrefs(apikey);
       if (!prefsData || prefsData.length === 0) {
-        setError("Failed to fetch pref data");
+        setError(true);
       } else {
-        setprefs(prefsData);
+        setPrefs(prefsData);
       }
       setLoading(false);
     })();
-  }, []);
+  }, [apikey]);
+
+  if (error) return null;
 
   return (
     <div>
-      <h1>都道府県を選択してください</h1>
+      <h2>都道府県を選択してください</h2>
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
       <ul>
         {prefs.map((pref) => (
           <PrefecturesItem
-            pref={pref}
-            prefCode={Number(pref.prefCode)}
             key={pref.prefCode}
+            pref={pref}
             selectedPrefs={selectedPrefs}
+            // ↓これはcontextに置き換える
             onCheckboxChange={handleCheckboxChange}
           />
         ))}

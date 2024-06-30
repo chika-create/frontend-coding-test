@@ -1,4 +1,4 @@
-export const fetchprefs = async (API_KEY: string) => {
+export const fetchPrefs = async (API_KEY: string) => {
   try {
     const response = await fetch(
       `https://opendata.resas-portal.go.jp/api/v1/prefectures`,

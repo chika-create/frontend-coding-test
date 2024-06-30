@@ -11,9 +11,9 @@ import {
 } from "recharts";
 import { fetchPopulationData } from "../../lib/fetchPopulationData";
 import { fetchPrefectureNames } from "../../lib/fetchPrefectureNames";
+import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 
 interface PopulationGraphProps {
-  apikey: string;
   selectedPrefs: string[];
 }
 
@@ -30,9 +30,10 @@ type GraphDataType = {
 };
 
 export const PopulationGraph: FC<PopulationGraphProps> = ({
-  apikey,
   selectedPrefs,
 }) => {
+  const apikey = useFetchApiKey();
+
   // 各都道府県の人口データを格納
   const [populationData, setPopulationData] = useState<{
     [key: string]: PopulationData[];
