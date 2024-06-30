@@ -1,6 +1,5 @@
-import { FC, useEffect, useState } from "react";
-import { fetchPrefs } from "../../lib/fetchPrefs";
-import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
+import { FC } from "react";
+import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData"
 import { PrefecturesItem } from "./PrefecturesItem";
 
 interface PrefecturesProps {
@@ -12,27 +11,9 @@ export const Prefectures: FC<PrefecturesProps> = ({
   handleCheckboxChange,
   selectedPrefs,
 }) => {
-  const apikey = useFetchApiKey();
-  const [prefs, setPrefs] = useState<{ prefCode: string; prefName: string }[]>(
-    []
-  );
-  const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
 
   // 都道府県のデータを取得
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-      setError(false);
-      const prefsData = await fetchPrefs(apikey);
-      if (!prefsData || prefsData.length === 0) {
-        setError(true);
-      } else {
-        setPrefs(prefsData);
-      }
-      setLoading(false);
-    })();
-  }, [apikey]);
+  const { loading, error, prefs } = useGetPrefectureData();
 
   if (error) return null;
 
