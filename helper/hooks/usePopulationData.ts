@@ -38,4 +38,6 @@ export const usePopulationData = ({ selectedPrefs }: any) => {
     };
     fetchData();
   }, [selectedPrefs, apikey]);
+
+  return { loading, error, populationData };
 };

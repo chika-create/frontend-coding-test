@@ -9,17 +9,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { fetchPopulationData } from "../../lib/fetchPopulationData";
 import { fetchPrefectureNames } from "../../lib/fetchPrefectureNames";
 import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
+import { usePopulationData } from "../../helper/hooks/usePopulationData";
 
 interface PopulationGraphProps {
   selectedPrefs: string[];
-}
-
-interface PopulationData {
-  year: number;
-  value: number;
 }
 
 type GraphDataType = {
@@ -33,16 +28,9 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
   selectedPrefs,
 }) => {
   const apikey = useFetchApiKey();
-
-  // 各都道府県の人口データを格納
-  const [populationData, setPopulationData] = useState<{
-    [key: string]: PopulationData[];
-  }>({});
   const [prefectureNames, setPrefectureNames] = useState<{
     [key: string]: string;
   }>({});
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
   // 都道府県名を取得する
   useEffect(() => {
@@ -59,29 +47,8 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
   }, [apikey]);
 
   // 選択した都道府県の人口データを取得し格納
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-
-      const newPopulationData: { [key: string]: PopulationData[] } = {};
-      for (const prefCode of selectedPrefs) {
-        try {
-          const data = await fetchPopulationData(apikey, Number(prefCode));
-          if (data.length === 0) {
-            setError("Failed to fetch population data");
-          } else {
-            newPopulationData[prefCode] = data;
-          }
-        } catch (e) {
-          setError(`Failed to fetch population data for prefCode: ${prefCode}`);
-        }
-      }
-      setPopulationData(newPopulationData);
-      setLoading(false);
-    };
-    fetchData();
-  }, [selectedPrefs, apikey]);
+  const { loading, error, populationData } = usePopulationData(selectedPrefs);
+  console.log("populationData: ", populationData);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
