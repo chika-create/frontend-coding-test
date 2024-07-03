@@ -39,7 +39,7 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
         const names = await fetchPrefectureNames(apikey);
         setPrefectureNames(names);
       } catch (e) {
-        setError("Failed to fetch prefecture names");
+        console.error("Failed to fetch prefecture names");
       }
     };
 

@@ -7,7 +7,7 @@ interface PopulationData {
   value: number;
 }
 
-export const usePopulationData = ({ selectedPrefs }: any) => {
+export const usePopulationData = (selectedPrefs: string[]) => {
   const apikey = useFetchApiKey();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,6 +17,8 @@ export const usePopulationData = ({ selectedPrefs }: any) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!Array.isArray(selectedPrefs)) return;
+
       setLoading(true);
       setError(null);
 
