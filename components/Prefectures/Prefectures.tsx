@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData"
+import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData";
 import { PrefecturesItem } from "./PrefecturesItem";
 
 interface PrefecturesProps {
@@ -11,18 +11,18 @@ export const Prefectures: FC<PrefecturesProps> = ({
   handleCheckboxChange,
   selectedPrefs,
 }) => {
-
   // 都道府県のデータを取得
-  const { loading, error, prefs } = useGetPrefectureData();
+  const { prefectureDataLoading, prefectureDataError, prefectureData } =
+    useGetPrefectureData();
 
-  if (error) return null;
+  if (prefectureDataError) return null;
 
   return (
     <div>
       <h2>都道府県を選択してください</h2>
-      {loading && <p>Loading...</p>}
+      {prefectureDataLoading && <p>Loading...</p>}
       <ul>
-        {prefs.map((pref) => (
+        {prefectureData.map((pref) => (
           <PrefecturesItem
             key={pref.prefCode}
             pref={pref}

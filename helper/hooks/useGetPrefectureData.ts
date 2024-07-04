@@ -3,26 +3,28 @@ import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 import { fetchPrefs } from "../../lib/fetchPrefs";
 
 export const useGetPrefectureData = () => {
-    const apikey = useFetchApiKey();
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<boolean>(false);
-    const [prefs, setPrefs] = useState<{ prefCode: string; prefName: string }[]>(
-        []
-    );
-    
-    useEffect(() => {
-        (async () => {
-        setLoading(true);
-        setError(false);
-        const prefsData = await fetchPrefs(apikey);
-        if (!prefsData || prefsData.length === 0) {
-            setError(true);
-        } else {
-            setPrefs(prefsData);
-        }
-        setLoading(false);
-        })();
-    }, [apikey]);
+  const apikey = useFetchApiKey();
+  const [prefectureDataLoading, setPrefectureDataLoading] =
+    useState<boolean>(true);
+  const [prefectureDataError, setPrefectureDataError] =
+    useState<boolean>(false);
+  const [prefectureData, setPrefectureData] = useState<
+    { prefCode: string; prefName: string }[]
+  >([]);
 
-    return {loading, error, prefs}
-  };
+  useEffect(() => {
+    (async () => {
+      setPrefectureDataLoading(true);
+      setPrefectureDataError(false);
+      const prefsData = await fetchPrefs(apikey);
+      if (!prefsData || prefsData.length === 0) {
+        setPrefectureDataError(true);
+      } else {
+        setPrefectureData(prefsData);
+      }
+      setPrefectureDataLoading(false);
+    })();
+  }, [apikey]);
+
+  return { prefectureDataLoading, prefectureDataError, prefectureData };
+};

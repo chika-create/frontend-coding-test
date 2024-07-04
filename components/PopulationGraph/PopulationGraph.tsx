@@ -9,9 +9,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { fetchPrefectureNames } from "../../lib/fetchPrefectureNames";
-import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
+// import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 import { usePopulationData } from "../../helper/hooks/usePopulationData";
+import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData";
+// import { fetchPrefectureNames } from "../../lib/fetchPrefectureNames";
 
 interface PopulationGraphProps {
   selectedPrefs: string[];
@@ -27,24 +28,33 @@ type GraphDataType = {
 export const PopulationGraph: FC<PopulationGraphProps> = ({
   selectedPrefs,
 }) => {
-  const apikey = useFetchApiKey();
-  const [prefectureNames, setPrefectureNames] = useState<{
-    [key: string]: string;
-  }>({});
+  // const apikey = useFetchApiKey();
+  // const [prefectureNames, setPrefectureNames] = useState<{
+  //   [key: string]: string;
+  // }>({});
+
+  // 都道府県のデータを取得
+  const { prefectureDataLoading, prefectureDataError, prefectureData } =
+    useGetPrefectureData();
 
   // 都道府県名を取得する
-  useEffect(() => {
-    const fetchPrefNames = async () => {
-      try {
-        const names = await fetchPrefectureNames(apikey);
-        setPrefectureNames(names);
-      } catch (e) {
-        console.error("Failed to fetch prefecture names");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPrefNames = async () => {
+  //     try {
+  //       const names = await fetchPrefectureNames(apikey);
+  //       setPrefectureNames(names);
+  //     } catch (e) {
+  //       console.error("Failed to fetch prefecture names");
+  //     }
+  //   };
 
-    fetchPrefNames();
-  }, [apikey]);
+  //   fetchPrefNames();
+  // }, [apikey]);
+
+  const prefectureNames = prefectureData.reduce((accumulator, pref) => {
+    accumulator[pref.prefCode] = pref.prefName;
+    return accumulator;
+  }, {} as { [key: string]: string });
 
   // 選択した都道府県の人口データを取得し格納
   const { loading, error, populationData } = usePopulationData(selectedPrefs);
