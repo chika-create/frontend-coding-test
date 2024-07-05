@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC } from "react";
 import {
   LineChart,
   Line,
@@ -9,17 +9,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { fetchPopulationData } from "../../lib/fetchPopulationData";
-import { fetchPrefectureNames } from "../../lib/fetchPrefectureNames";
+import { usePopulationData } from "../../helper/hooks/usePopulationData";
+import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData";
 
 interface PopulationGraphProps {
-  apikey: string;
   selectedPrefs: string[];
-}
-
-interface PopulationData {
-  year: number;
-  value: number;
 }
 
 type GraphDataType = {
@@ -30,60 +24,32 @@ type GraphDataType = {
 };
 
 export const PopulationGraph: FC<PopulationGraphProps> = ({
-  apikey,
   selectedPrefs,
 }) => {
-  // 各都道府県の人口データを格納
-  const [populationData, setPopulationData] = useState<{
-    [key: string]: PopulationData[];
-  }>({});
-  const [prefectureNames, setPrefectureNames] = useState<{
-    [key: string]: string;
-  }>({});
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  // 都道府県名を取得する
-  useEffect(() => {
-    const fetchPrefNames = async () => {
-      try {
-        const names = await fetchPrefectureNames(apikey);
-        setPrefectureNames(names);
-      } catch (e) {
-        setError("Failed to fetch prefecture names");
-      }
-    };
-
-    fetchPrefNames();
-  }, [apikey]);
+  // 都道府県のデータを取得
+  const { prefectureDataLoading, prefectureDataError, prefectureData } =
+    useGetPrefectureData();
 
   // 選択した都道府県の人口データを取得し格納
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
+  const { populationDataLoading, populationDataError, populationData } =
+    usePopulationData(selectedPrefs);
 
-      const newPopulationData: { [key: string]: PopulationData[] } = {};
-      for (const prefCode of selectedPrefs) {
-        try {
-          const data = await fetchPopulationData(apikey, Number(prefCode));
-          if (data.length === 0) {
-            setError("Failed to fetch population data");
-          } else {
-            newPopulationData[prefCode] = data;
-          }
-        } catch (e) {
-          setError(`Failed to fetch population data for prefCode: ${prefCode}`);
-        }
-      }
-      setPopulationData(newPopulationData);
-      setLoading(false);
-    };
-    fetchData();
-  }, [selectedPrefs, apikey]);
+  if (prefectureDataLoading || populationDataLoading) return <p>Loading...</p>;
+  if (prefectureDataError || populationDataError)
+    return (
+      <>
+        <p style={{ color: "red" }}>{prefectureDataError}</p>
+        <p style={{ color: "red" }}>{populationDataError}</p>
+      </>
+    );
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  // reduce メソッドは配列を一つの値に縮小するために使用
+  // 第一引数には、accumulator という名前の累積オブジェクトと、pref という名前の現在の配列要素が渡されます。
+  // 第二引数には、reduce メソッドの初期値が渡されます{}（空オブジェクト）を初期値として渡しています。
+  const prefectureNames = prefectureData.reduce((accumulator, pref) => {
+    accumulator[pref.prefCode] = pref.prefName;
+    return accumulator;
+  }, {} as { [key: string]: string });
 
   // 取得した人口データをRechartsで利用できる形に変換
   const generateGraphData = (): {
@@ -107,6 +73,8 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
     // オブジェクトを配列に変換し年ごとにソート
     return Object.values(graphData).sort((a, b) => a.year - b.year);
   };
+
+  const prefectureCodes = Object.keys(populationData);
 
   // グラフデータを生成
   const graphData = generateGraphData();
@@ -141,7 +109,7 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
           />
           <Tooltip />
           <Legend />
-          {Object.keys(populationData).map((prefCode, index) => (
+          {prefectureCodes.map((prefCode, index) => (
             <Line
               key={prefCode}
               type="monotone"
