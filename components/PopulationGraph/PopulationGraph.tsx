@@ -43,6 +43,9 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
       </>
     );
 
+  // reduce メソッドは配列を一つの値に縮小するために使用
+  // 第一引数には、accumulator という名前の累積オブジェクトと、pref という名前の現在の配列要素が渡されます。
+  // 第二引数には、reduce メソッドの初期値が渡されます{}（空オブジェクト）を初期値として渡しています。
   const prefectureNames = prefectureData.reduce((accumulator, pref) => {
     accumulator[pref.prefCode] = pref.prefName;
     return accumulator;
@@ -70,6 +73,8 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
     // オブジェクトを配列に変換し年ごとにソート
     return Object.values(graphData).sort((a, b) => a.year - b.year);
   };
+
+  const prefectureCodes = Object.keys(populationData);
 
   // グラフデータを生成
   const graphData = generateGraphData();
@@ -104,7 +109,7 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
           />
           <Tooltip />
           <Legend />
-          {Object.keys(populationData).map((prefCode, index) => (
+          {prefectureCodes.map((prefCode, index) => (
             <Line
               key={prefCode}
               type="monotone"
