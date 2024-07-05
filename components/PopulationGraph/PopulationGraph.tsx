@@ -30,17 +30,17 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
   const { prefectureDataLoading, prefectureDataError, prefectureData } =
     useGetPrefectureData();
 
+  // 選択した都道府県の人口データを取得し格納
+  const { loading, error, populationData } = usePopulationData(selectedPrefs);
+
+  if (loading || prefectureDataLoading) return <p>Loading...</p>;
+  if (error || prefectureDataError)
+    return <p style={{ color: "red" }}>{error}</p>;
+
   const prefectureNames = prefectureData.reduce((accumulator, pref) => {
     accumulator[pref.prefCode] = pref.prefName;
     return accumulator;
   }, {} as { [key: string]: string });
-
-  // 選択した都道府県の人口データを取得し格納
-  const { loading, error, populationData } = usePopulationData(selectedPrefs);
-  console.log("populationData: ", populationData);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   // 取得した人口データをRechartsで利用できる形に変換
   const generateGraphData = (): {
