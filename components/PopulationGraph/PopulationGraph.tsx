@@ -31,11 +31,17 @@ export const PopulationGraph: FC<PopulationGraphProps> = ({
     useGetPrefectureData();
 
   // 選択した都道府県の人口データを取得し格納
-  const { loading, error, populationData } = usePopulationData(selectedPrefs);
+  const { populationDataLoading, populationDataError, populationData } =
+    usePopulationData(selectedPrefs);
 
-  if (loading || prefectureDataLoading) return <p>Loading...</p>;
-  if (error || prefectureDataError)
-    return <p style={{ color: "red" }}>{error}</p>;
+  if (prefectureDataLoading || populationDataLoading) return <p>Loading...</p>;
+  if (prefectureDataError || populationDataError)
+    return (
+      <>
+        <p style={{ color: "red" }}>{prefectureDataError}</p>
+        <p style={{ color: "red" }}>{populationDataError}</p>
+      </>
+    );
 
   const prefectureNames = prefectureData.reduce((accumulator, pref) => {
     accumulator[pref.prefCode] = pref.prefName;

@@ -9,8 +9,11 @@ interface PopulationData {
 
 export const usePopulationData = (selectedPrefs: string[]) => {
   const apikey = useFetchApiKey();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [populationDataLoading, setPopulationDataLoading] =
+    useState<boolean>(false);
+  const [populationDataError, setPopulationDataError] = useState<string | null>(
+    null
+  );
   const [populationData, setPopulationData] = useState<{
     [key: string]: PopulationData[];
   }>({});
@@ -19,27 +22,29 @@ export const usePopulationData = (selectedPrefs: string[]) => {
     const fetchData = async () => {
       if (!Array.isArray(selectedPrefs)) return;
 
-      setLoading(true);
-      setError(null);
+      setPopulationDataLoading(true);
+      setPopulationDataError(null);
 
       const newPopulationData: { [key: string]: PopulationData[] } = {};
       for (const prefCode of selectedPrefs) {
         try {
           const data = await fetchPopulationData(apikey, Number(prefCode));
           if (data.length === 0) {
-            setError("Failed to fetch population data");
+            setPopulationDataError("Failed to fetch population data");
           } else {
             newPopulationData[prefCode] = data;
           }
         } catch (e) {
-          setError(`Failed to fetch population data for prefCode: ${prefCode}`);
+          setPopulationDataError(
+            `Failed to fetch population data for prefCode: ${prefCode}`
+          );
         }
       }
       setPopulationData(newPopulationData);
-      setLoading(false);
+      setPopulationDataLoading(false);
     };
     fetchData();
   }, [selectedPrefs, apikey]);
 
-  return { loading, error, populationData };
+  return { populationDataLoading, populationDataError, populationData };
 };
