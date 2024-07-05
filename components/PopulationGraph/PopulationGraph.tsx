@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC } from "react";
 import {
   LineChart,
   Line,
@@ -9,10 +9,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-// import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 import { usePopulationData } from "../../helper/hooks/usePopulationData";
 import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData";
-// import { fetchPrefectureNames } from "../../lib/fetchPrefectureNames";
 
 interface PopulationGraphProps {
   selectedPrefs: string[];
@@ -28,28 +26,9 @@ type GraphDataType = {
 export const PopulationGraph: FC<PopulationGraphProps> = ({
   selectedPrefs,
 }) => {
-  // const apikey = useFetchApiKey();
-  // const [prefectureNames, setPrefectureNames] = useState<{
-  //   [key: string]: string;
-  // }>({});
-
   // 都道府県のデータを取得
   const { prefectureDataLoading, prefectureDataError, prefectureData } =
     useGetPrefectureData();
-
-  // 都道府県名を取得する
-  // useEffect(() => {
-  //   const fetchPrefNames = async () => {
-  //     try {
-  //       const names = await fetchPrefectureNames(apikey);
-  //       setPrefectureNames(names);
-  //     } catch (e) {
-  //       console.error("Failed to fetch prefecture names");
-  //     }
-  //   };
-
-  //   fetchPrefNames();
-  // }, [apikey]);
 
   const prefectureNames = prefectureData.reduce((accumulator, pref) => {
     accumulator[pref.prefCode] = pref.prefName;
