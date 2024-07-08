@@ -20,7 +20,7 @@ export const PrefecturesItem: FC<PrefecturesItemProps> = ({
   // 現在の都道府県が選択されているか確認
   const selectedFlag = selectedPrefs.includes(pref.prefCode);
   return (
-    <li key={pref.prefCode}>
+    <li>
       <label>
         <input
           type="checkbox"
