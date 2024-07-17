@@ -22,7 +22,6 @@ export const Prefectures: FC = () => {
             key={pref.prefCode}
             pref={pref}
             selectedPrefs={selectedPrefs}
-            // ↓これはcontextに置き換える
             onCheckboxChange={handleCheckboxChange}
           />
         ))}
