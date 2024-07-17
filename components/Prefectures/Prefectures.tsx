@@ -4,7 +4,7 @@ import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData";
 import { PrefecturesItem } from "./PrefecturesItem";
 
 export const Prefectures: FC = () => {
-  const { selectedPrefs, handleCheckboxChange } = useCheckboxContext();
+  const { selectedPrefs, updateSelectedPrefectures } = useCheckboxContext();
 
   // 都道府県のデータを取得
   const { prefectureDataLoading, prefectureDataError, prefectureData } =
@@ -22,7 +22,7 @@ export const Prefectures: FC = () => {
             key={pref.prefCode}
             pref={pref}
             selectedPrefs={selectedPrefs}
-            onCheckboxChange={handleCheckboxChange}
+            onCheckboxChange={updateSelectedPrefectures}
           />
         ))}
       </ul>
