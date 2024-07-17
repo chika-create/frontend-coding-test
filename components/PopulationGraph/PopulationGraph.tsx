@@ -9,12 +9,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useCheckboxContext } from "../../helper/context/SelectedPrefsContext";
 import { usePopulationData } from "../../helper/hooks/usePopulationData";
 import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData";
-
-interface PopulationGraphProps {
-  selectedPrefs: string[];
-}
 
 type GraphDataType = {
   [year: string]: {
@@ -23,9 +20,9 @@ type GraphDataType = {
   };
 };
 
-export const PopulationGraph: FC<PopulationGraphProps> = ({
-  selectedPrefs,
-}) => {
+export const PopulationGraph: FC = () => {
+  const { selectedPrefs } = useCheckboxContext();
+
   // 都道府県のデータを取得
   const { prefectureDataLoading, prefectureDataError, prefectureData } =
     useGetPrefectureData();

@@ -1,16 +1,11 @@
 import { FC } from "react";
+import { useCheckboxContext } from "../../helper/context/SelectedPrefsContext";
 import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData";
 import { PrefecturesItem } from "./PrefecturesItem";
 
-interface PrefecturesProps {
-  handleCheckboxChange: (code: string) => void;
-  selectedPrefs: string[];
-}
+export const Prefectures: FC = () => {
+  const { selectedPrefs, handleCheckboxChange } = useCheckboxContext();
 
-export const Prefectures: FC<PrefecturesProps> = ({
-  handleCheckboxChange,
-  selectedPrefs,
-}) => {
   // 都道府県のデータを取得
   const { prefectureDataLoading, prefectureDataError, prefectureData } =
     useGetPrefectureData();
