@@ -13,7 +13,7 @@ export const useCheckboxContext = () => {
   const context = useContext(CheckboxContext);
   if (!context) {
     throw new Error(
-      "useCheckboxContext must be used within a CheckboxProvider"
+      "useCheckboxContext は CheckboxProvider 内で使用する必要があります"
     );
   }
   return context;
@@ -24,13 +24,16 @@ interface CheckboxProviderProps {
 }
 
 export const CheckboxProvider: FC<CheckboxProviderProps> = ({ children }) => {
+  // 選択された都道府県コードを管理
   const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
 
   const handleCheckboxChange = (code: string) => {
     setSelectedPrefs((currentSelected) => {
       if (currentSelected.includes(code)) {
+        // currentSelectedにcodeが含まれている場合、そのコードを配列から削除
         return currentSelected.filter((selectedCode) => selectedCode !== code);
       } else {
+        // 既存の配列を展開し、新しい要素（code）を追加した新しい配列を作成
         return [...currentSelected, code];
       }
     });
