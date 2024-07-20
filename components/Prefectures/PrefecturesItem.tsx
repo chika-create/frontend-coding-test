@@ -1,15 +1,10 @@
 import { FC } from "react";
+import { PrefectureInterface } from "../../types/types"
 
 interface PrefecturesItemProps {
-  pref: Prefecture;
+  pref: PrefectureInterface;
   selectedPrefs: string[];
   onCheckboxChange: (code: string) => void;
-}
-
-// 都道府県の型を定義
-interface Prefecture {
-  prefCode: string;
-  prefName: string;
 }
 
 export const PrefecturesItem: FC<PrefecturesItemProps> = ({
