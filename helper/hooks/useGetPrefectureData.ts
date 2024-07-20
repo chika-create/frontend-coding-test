@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PrefectureInterface } from "../../types/types"
 import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 import { fetchPrefs } from "../../lib/fetchPrefs";
 
@@ -8,10 +9,7 @@ export const useGetPrefectureData = () => {
     useState<boolean>(true);
   const [prefectureDataError, setPrefectureDataError] =
     useState<boolean>(false);
-  const [prefectureData, setPrefectureData] = useState<
-    { prefCode: string; prefName: string }[]
-  >([]);
-
+  const [prefectureData, setPrefectureData] = useState<PrefectureInterface[]>([]);
   useEffect(() => {
     (async () => {
       setPrefectureDataLoading(true);

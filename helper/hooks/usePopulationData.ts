@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectedPrefsType } from "../../types/types"
 import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 import { fetchPopulationData } from "../../lib/fetchPopulationData";
