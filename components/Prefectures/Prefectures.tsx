@@ -1,10 +1,11 @@
 import { FC } from "react";
+import { SelectedPrefsType } from "../../types/types"
 import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData";
 import { PrefecturesItem } from "./PrefecturesItem";
 
 interface PrefecturesProps {
   handleCheckboxChange: (code: string) => void;
-  selectedPrefs: string[];
+  selectedPrefs: SelectedPrefsType;
 }
 
 export const Prefectures: FC<PrefecturesProps> = ({

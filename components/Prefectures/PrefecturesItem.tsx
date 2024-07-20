@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { PrefectureInterface } from "../../types/types"
+import { PrefectureInterface, SelectedPrefsType } from "../../types/types"
 
 interface PrefecturesItemProps {
   pref: PrefectureInterface;
-  selectedPrefs: string[];
+  selectedPrefs: SelectedPrefsType;
   onCheckboxChange: (code: string) => void;
 }
 

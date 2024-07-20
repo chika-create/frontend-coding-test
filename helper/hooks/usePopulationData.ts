@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { SelectedPrefsType } from "../../types/types"
 import { useFetchApiKey } from "../../helper/hooks/useFetchApiKey";
 import { fetchPopulationData } from "../../lib/fetchPopulationData";
 
@@ -7,7 +8,7 @@ interface PopulationData {
   value: number;
 }
 
-export const usePopulationData = (selectedPrefs: string[]) => {
+export const usePopulationData = (selectedPrefs: SelectedPrefsType) => {
   const apikey = useFetchApiKey();
   const [populationDataLoading, setPopulationDataLoading] =
     useState<boolean>(false);

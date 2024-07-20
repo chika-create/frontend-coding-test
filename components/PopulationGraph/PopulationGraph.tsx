@@ -9,11 +9,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { SelectedPrefsType } from "../../types/types"
 import { usePopulationData } from "../../helper/hooks/usePopulationData";
 import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData";
 
 interface PopulationGraphProps {
-  selectedPrefs: string[];
+  selectedPrefs: SelectedPrefsType;
 }
 
 type GraphDataType = {
