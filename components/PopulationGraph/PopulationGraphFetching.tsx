@@ -12,6 +12,7 @@ import {
 import { useCheckboxContext } from "../../helper/context/SelectedPrefsContext";
 import { usePopulationData } from "../../helper/hooks/usePopulationData";
 import { useGetPrefectureData } from "../../helper/hooks/useGetPrefectureData";
+import { ErrorMessage } from "../common/ErrorMessage";
 
 type GraphDataType = {
   [year: string]: {
@@ -28,13 +29,13 @@ export const PopulationGraphFetching: FC = () => {
     usePopulationData(selectedPrefs);
 
   if (prefectureDataLoading || populationDataLoading) return <p>Loading...</p>;
-  if (prefectureDataError || populationDataError)
-    return (
-      <>
-        <p style={{ color: "red" }}>{prefectureDataError}</p>
-        <p style={{ color: "red" }}>{populationDataError}</p>
-      </>
-    );
+  if (prefectureDataError || populationDataError) {
+    const errorMessage =
+      (prefectureDataError && prefectureDataError.toString()) ||
+      (populationDataError && populationDataError.toString()) ||
+      "エラーが発生しました";
+    return <ErrorMessage error={errorMessage} />;
+  }
 
   const prefectureNames = prefectureData.reduce((accumulator, pref) => {
     accumulator[pref.prefCode] = pref.prefName;
