@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, Suspense } from "react";
 import {
   LineChart,
   Line,
@@ -78,45 +78,51 @@ export const PopulationGraph: FC = () => {
 
   return (
     <>
-      <div>
-        <h2>選択された都道府県:</h2>
-        <ul>
-          {selectedPrefs.map((prefCode) => {
-            return <li key={prefCode}>{prefectureNames[prefCode]}</li>;
-          })}
-        </ul>
-      </div>
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart
-          data={graphData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="year"
-            label={{ value: "年度", position: "insideBottomRight", offset: 0 }}
-          />
-          <YAxis
-            label={{ value: "人口", angle: -90, position: "insideLeft" }}
-          />
-          <Tooltip />
-          <Legend />
-          {prefectureCodes.map((prefCode, index) => (
-            <Line
-              key={prefCode}
-              type="monotone"
-              dataKey={prefCode}
-              name={prefectureNames[prefCode]}
-              stroke={`hsl(${(index * 137.5) % 360}, 70%, 50%)`}
+      <Suspense fallback={<p>Loading...</p>}>
+        <div>
+          <h2>選択された都道府県:</h2>
+          <ul>
+            {selectedPrefs.map((prefCode) => {
+              return <li key={prefCode}>{prefectureNames[prefCode]}</li>;
+            })}
+          </ul>
+        </div>
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart
+            data={graphData}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="year"
+              label={{
+                value: "年度",
+                position: "insideBottomRight",
+                offset: 0,
+              }}
             />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
+            <YAxis
+              label={{ value: "人口", angle: -90, position: "insideLeft" }}
+            />
+            <Tooltip />
+            <Legend />
+            {prefectureCodes.map((prefCode, index) => (
+              <Line
+                key={prefCode}
+                type="monotone"
+                dataKey={prefCode}
+                name={prefectureNames[prefCode]}
+                stroke={`hsl(${(index * 137.5) % 360}, 70%, 50%)`}
+              />
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
+      </Suspense>
     </>
   );
 };
