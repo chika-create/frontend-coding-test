@@ -17,14 +17,13 @@ export const PrefecturesItem: FC<PrefecturesItemProps> = ({
   selectedPrefs,
   onCheckboxChange,
 }) => {
-  // 現在の都道府県が選択されているか確認
-  const selectedFlag = selectedPrefs.includes(pref.prefCode);
   return (
-    <li key={pref.prefCode}>
+    <li>
       <label>
         <input
           type="checkbox"
-          checked={selectedFlag}
+          // 現在の都道府県が選択されているか確認
+          checked={selectedPrefs.includes(pref.prefCode)}
           value={pref.prefCode}
           onChange={() => onCheckboxChange(pref.prefCode)}
         />
