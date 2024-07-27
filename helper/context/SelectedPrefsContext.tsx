@@ -1,8 +1,8 @@
 import { createContext, useContext, useState, ReactNode, FC } from "react";
 
 interface CheckboxContextType {
-  checkedPrefs: string[];
-  updateCheckedPrefs: (code: string) => void;
+  checkedPrefs: Prefecture[];
+  updateCheckedPrefs: (code: string, name: string) => void;
 }
 
 const CheckboxContext = createContext<CheckboxContextType | undefined>(
@@ -23,26 +23,28 @@ interface CheckboxProviderProps {
   children: ReactNode;
 }
 
+interface Prefecture {
+  code: string;
+  name: string;
+}
+
 export const CheckboxProvider: FC<CheckboxProviderProps> = ({ children }) => {
   // 選択された都道府県コードを管理
-  const [checkedPrefs, setCheckedPrefs] = useState<string[]>([]);
+  const [checkedPrefs, setCheckedPrefs] = useState<Prefecture[]>([]);
 
-  const updateCheckedPrefs = (code: string) => {
+  const updateCheckedPrefs = (code: string, name: string) => {
     setCheckedPrefs((currentSelected) => {
-      if (currentSelected.includes(code)) {
-        // currentSelectedにcodeが含まれている場合、そのコードを配列から削除
-        return currentSelected.filter((checkedPrefs) => checkedPrefs !== code);
+      const exists = currentSelected.some((pref) => pref.code === code);
+      if (exists) {
+        return currentSelected.filter((pref) => pref.code !== code);
       } else {
-        // 既存の配列を展開し、新しい要素（code）を追加した新しい配列を作成
-        return [...currentSelected, code];
+        return [...currentSelected, { code, name }];
       }
     });
   };
-
+  
   return (
-    <CheckboxContext.Provider
-      value={{ checkedPrefs, updateCheckedPrefs }}
-    >
+    <CheckboxContext.Provider value={{ checkedPrefs, updateCheckedPrefs }}>
       {children}
     </CheckboxContext.Provider>
   );

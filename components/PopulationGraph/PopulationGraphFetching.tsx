@@ -26,7 +26,7 @@ export const PopulationGraphFetching: FC = () => {
   const { prefectureDataLoading, prefectureDataError, prefectureData } =
     useGetPrefectureData();
   const { populationDataLoading, populationDataError, populationData } =
-    usePopulationData(checkedPrefs);
+    usePopulationData(checkedPrefs.map((pref) => pref.code));
 
   if (prefectureDataLoading || populationDataLoading) return <p>Loading...</p>;
   if (prefectureDataError || populationDataError) {
@@ -68,8 +68,8 @@ export const PopulationGraphFetching: FC = () => {
       <div>
         <h2>選択された都道府県:</h2>
         <ul>
-          {checkedPrefs.map((prefCode) => (
-            <li key={prefCode}>{prefectureNames[prefCode]}</li>
+          {checkedPrefs.map((pref) => (
+            <li key={pref.code}>{pref.name}</li>
           ))}
         </ul>
       </div>
