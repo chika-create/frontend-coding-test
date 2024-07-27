@@ -2,7 +2,7 @@ import { FC } from "react";
 
 interface PrefecturesItemProps {
   pref: Prefecture;
-  selectedPrefs: string[];
+  checkedPrefs: string[];
   onCheckboxChange: (code: string) => void;
 }
 
@@ -14,7 +14,7 @@ interface Prefecture {
 
 export const PrefecturesItem: FC<PrefecturesItemProps> = ({
   pref,
-  selectedPrefs,
+  checkedPrefs,
   onCheckboxChange,
 }) => {
   return (
@@ -23,7 +23,7 @@ export const PrefecturesItem: FC<PrefecturesItemProps> = ({
         <input
           type="checkbox"
           // 現在の都道府県が選択されているか確認
-          checked={selectedPrefs.includes(pref.prefCode)}
+          checked={checkedPrefs.includes(pref.prefCode)}
           value={pref.prefCode}
           onChange={() => onCheckboxChange(pref.prefCode)}
         />

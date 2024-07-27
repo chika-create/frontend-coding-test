@@ -7,7 +7,7 @@ interface PopulationData {
   value: number;
 }
 
-export const usePopulationData = (selectedPrefs: string[]) => {
+export const usePopulationData = (checkedPrefs: string[]) => {
   const apikey = useFetchApiKey();
   const [populationDataLoading, setPopulationDataLoading] =
     useState<boolean>(false);
@@ -20,13 +20,13 @@ export const usePopulationData = (selectedPrefs: string[]) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!Array.isArray(selectedPrefs)) return;
+      if (!Array.isArray(checkedPrefs)) return;
 
       setPopulationDataLoading(true);
       setPopulationDataError(null);
 
       const newPopulationData: { [key: string]: PopulationData[] } = {};
-      for (const prefCode of selectedPrefs) {
+      for (const prefCode of checkedPrefs) {
         try {
           const data = await fetchPopulationData(apikey, Number(prefCode));
           if (data.length === 0) {
@@ -44,7 +44,7 @@ export const usePopulationData = (selectedPrefs: string[]) => {
       setPopulationDataLoading(false);
     };
     fetchData();
-  }, [selectedPrefs, apikey]);
+  }, [checkedPrefs, apikey]);
 
   return { populationDataLoading, populationDataError, populationData };
 };

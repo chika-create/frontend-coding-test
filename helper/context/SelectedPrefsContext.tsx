@@ -1,8 +1,8 @@
 import { createContext, useContext, useState, ReactNode, FC } from "react";
 
 interface CheckboxContextType {
-  selectedPrefs: string[];
-  updateSelectedPrefectures: (code: string) => void;
+  checkedPrefs: string[];
+  updateCheckedPrefs: (code: string) => void;
 }
 
 const CheckboxContext = createContext<CheckboxContextType | undefined>(
@@ -25,13 +25,13 @@ interface CheckboxProviderProps {
 
 export const CheckboxProvider: FC<CheckboxProviderProps> = ({ children }) => {
   // 選択された都道府県コードを管理
-  const [selectedPrefs, setSelectedPrefs] = useState<string[]>([]);
+  const [checkedPrefs, setCheckedPrefs] = useState<string[]>([]);
 
-  const updateSelectedPrefectures = (code: string) => {
-    setSelectedPrefs((currentSelected) => {
+  const updateCheckedPrefs = (code: string) => {
+    setCheckedPrefs((currentSelected) => {
       if (currentSelected.includes(code)) {
         // currentSelectedにcodeが含まれている場合、そのコードを配列から削除
-        return currentSelected.filter((selectedCode) => selectedCode !== code);
+        return currentSelected.filter((checkedPrefs) => checkedPrefs !== code);
       } else {
         // 既存の配列を展開し、新しい要素（code）を追加した新しい配列を作成
         return [...currentSelected, code];
@@ -41,7 +41,7 @@ export const CheckboxProvider: FC<CheckboxProviderProps> = ({ children }) => {
 
   return (
     <CheckboxContext.Provider
-      value={{ selectedPrefs, updateSelectedPrefectures }}
+      value={{ checkedPrefs, updateCheckedPrefs }}
     >
       {children}
     </CheckboxContext.Provider>

@@ -22,11 +22,11 @@ type GraphDataType = {
 };
 
 export const PopulationGraphFetching: FC = () => {
-  const { selectedPrefs } = useCheckboxContext();
+  const { checkedPrefs } = useCheckboxContext();
   const { prefectureDataLoading, prefectureDataError, prefectureData } =
     useGetPrefectureData();
   const { populationDataLoading, populationDataError, populationData } =
-    usePopulationData(selectedPrefs);
+    usePopulationData(checkedPrefs);
 
   if (prefectureDataLoading || populationDataLoading) return <p>Loading...</p>;
   if (prefectureDataError || populationDataError) {
@@ -68,7 +68,7 @@ export const PopulationGraphFetching: FC = () => {
       <div>
         <h2>選択された都道府県:</h2>
         <ul>
-          {selectedPrefs.map((prefCode) => (
+          {checkedPrefs.map((prefCode) => (
             <li key={prefCode}>{prefectureNames[prefCode]}</li>
           ))}
         </ul>
