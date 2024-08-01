@@ -11,9 +11,12 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@linaria/core": "^6.2.0",
+    "@linaria/react": "^6.2.1",
     "@remix-run/node": "^2.9.2",
     "@remix-run/react": "^2.9.2",
     "@remix-run/serve": "^2.9.2",
+    "@wyw-in-js/babel-preset": "^0.5.4",
     "isbot": "^4.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -21,6 +24,8 @@
     "remix": "^2.9.2"
   },
   "devDependencies": {
+    "@linaria/rollup": "^5.0.4",
+    "@linaria/vite": "^5.0.4",
     "@remix-run/dev": "^2.9.2",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
