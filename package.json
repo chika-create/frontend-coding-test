@@ -24,6 +24,8 @@
     "remix": "^2.9.2"
   },
   "devDependencies": {
+    "@linaria/rollup": "^5.0.4",
+    "@linaria/vite": "^5.0.4",
     "@remix-run/dev": "^2.9.2",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
